@@ -1,7 +1,7 @@
 <template>
 	<div class="app-container">
 		<div class="filter-container">
-			<el-input v-model="listQuery.title" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+			<el-input v-model="listQuery.title"  style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
 
 			<el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
 				Search
@@ -13,47 +13,48 @@
 		</div>
 		<br />
 		<el-table :key="tableKey" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%;" @sort-change="sortChange">
-			<el-table-column label="ID" prop="id" sortable="custom" align="center" width="80">
+			
+			<el-table-column label="ID" prop="id" sortable="custom" align="center" width="100">
 				<template slot-scope="scope">
 					<span>{{ scope.row.id }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column label="学校名称" width="110px" align="center">
+
+			<el-table-column label="管理员名称" width="110px" align="center">
 				<template slot-scope="scope">
-					<span>{{ scope.row.name }}</span>
-				</template>
-			</el-table-column>
-			<el-table-column label="简介" min-width="150px">
-				<template slot-scope="{row}">
-					<span class="link-type" @click="handleUpdate(row)">{{ row.jianjie }}</span>
-				</template>
-			</el-table-column>
-			<el-table-column label="学校历史" min-width="150px">
-				<template slot-scope="{row}">
-					<span class="link-type" @click="handleUpdate(row)">{{ row.history }}</span>
-				</template>
-			</el-table-column>
-			<el-table-column label="是否已经援助" width="110px" align="center">
-				<template slot-scope="scope">
-					<span>{{ scope.row.isgo }}</span>
-				</template>
-			</el-table-column>
-			<el-table-column label="是否需要援助" width="110px" align="center">
-				<template slot-scope="scope">
-					<span>{{ scope.row.isneed }}</span>
+					<span>{{ scope.row.username }}</span>
 				</template>
 			</el-table-column>
 
-			<el-table-column label="创建日期" width="150px" align="center">
+
+			<el-table-column label="创建时间" width="160px" align="center">
 				<template slot-scope="scope">
 					<span>{{ scope.row.createTime }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column label="编辑者" width="150px" align="center">
-				<template slot-scope="scope">
-					<span>{{ scope.row.Editor }}</span>
+
+			<el-table-column label="级别（个数）" width="120px">
+				<template slot-scope="{row}">
+					<span class="link-type" @click="handleUpdate(row)">{{ row.level }}</span>
 				</template>
 			</el-table-column>
+			<el-table-column label="QQ" min-width="100px">
+				<template slot-scope="{row}">
+					<span class="link-type" @click="handleUpdate(row)">{{ row.qq }}</span>
+				</template>
+			</el-table-column>
+			<el-table-column label="email" min-width="100px" align="center">
+				<template slot-scope="scope">
+					<span>{{ scope.row.email }}</span>
+				</template>
+			</el-table-column>
+			<el-table-column label="电话号码" min-width="110px" align="center">
+				<template slot-scope="scope">
+					<span>{{ scope.row.telephone }}</span>
+				</template>
+			</el-table-column>
+
+			
 			<el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
 				<template slot-scope="{row}">
 					<el-button v-if="row.status!='deleted'" type="primary" size="mini" @click="handleUpdate(row)">
@@ -70,28 +71,29 @@
 		<pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
 		<el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-			<el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-				<el-form-item label="学校名称">
-					<el-input v-model="temp.name" />
+			<el-form ref="dataForm"  :model="temp" label-position="left" label-width="170px" style="width: 400px; margin-left:50px;">
+			
+				<el-form-item label="username" v-if = temp.status>
+					<el-input v-model="temp.username" />
 				</el-form-item>
-				<el-form-item label="简介">
-					<el-input v-model="temp.jianjie" :autosize="{ minRows: 4, maxRows: 6}" type="textarea" placeholder="Please input" />
+			
+			
+			
+			
+				<el-form-item label="QQ">
+					<el-input v-model="temp.qq" />
 				</el-form-item>
-				<el-form-item label="学校历史">
-					<el-input v-model="temp.history" :autosize="{ minRows: 4, maxRows: 6}" type="textarea" placeholder="Please input" />
+				<el-form-item label="email">
+					<el-input v-model="temp.email" />
 				</el-form-item>
-				<el-form-item label="是否已经援助">
-					<el-select v-model="temp.isgo" class="filter-item" placeholder="Please select">
-						<el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
-					</el-select>
+				<el-form-item label="telephone">
+					<el-input v-model="temp.telephone"  />
 				</el-form-item>
-				<el-form-item label="是否需要援助">
-					<el-select v-model="temp.isneed" class="filter-item" placeholder="Please select">
-						<el-option v-for="item in statusOptions" :key="item.key" :label="item.display_name" :value="item.key" />
-					</el-select>
+				<el-form-item label="password">
+					<el-input v-model="temp.password"  />
 				</el-form-item>
 
-				<el-form-item v-if=false>
+				<!-- <el-form-item v-if=false>
 					<el-input v-model="temp.id" />
 				</el-form-item>
 				<el-form-item v-if=false>
@@ -99,7 +101,7 @@
 				</el-form-item>
 				<el-form-item v-if=false>
 					<el-input v-model="temp.editor" />
-				</el-form-item>
+				</el-form-item> -->
 
 			</el-form>
 			<div slot="footer" class="dialog-footer">
@@ -125,39 +127,13 @@
 </template>
 
 <script>
-	import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
+	import { fetchList, fetchPv, createRole, updateRole } from '@/api/role'
 	import waves from '@/directive/waves' // waves directive
 	import { parseTime } from '@/utils'
 	import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 	import axios from 'axios'
+	import Cookies from 'js-cookie'
 	
-	
-	
-
-	const calendarTypeOptions = [{
-			key: 'yes',
-			display_name: '是'
-		},
-		{
-			key: 'no',
-			display_name: '否'
-		},
-
-	]
-	const
-		statusOptions = [{
-			key: 'yes',
-			display_name: '是'
-		}, {
-			key: 'no',
-			display_name: '否'
-		}]
-
-	// arr to obj, such as { CN : "China", US : "USA" }
-	const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-		acc[cur.key] = cur.display_name
-		return acc
-	}, {})
 
 	export default {
 		name: 'ComplexTable',
@@ -185,17 +161,15 @@
 				tableKey: 0,
 				list: null,
 				total: 0,
+				
 				listLoading: true,
 				listQuery: {
 					page: 1,
 					limit: 20,
-					importance: undefined,
-					title: undefined,
+					title: '',
 					type: undefined,
 					sort: '+id'
 				},
-				importanceOptions: [1, 2, 3],
-				calendarTypeOptions,
 				sortOptions: [{
 					label: 'ID Ascending',
 					key: '+id'
@@ -203,16 +177,19 @@
 					label: 'ID Descending',
 					key: '-id'
 				}],
-				statusOptions,
 				showReviewer: false,
 				temp: {
 					id: undefined,
-					remark: '',
+	
+					username: '',
 					createTime: '',
-					title: '',
-					type: '',
-					status: 'published',
-					editor: ''
+					level: '',
+					qq: '',
+					email: '',
+					telephone: '',
+					editor: '',
+					password:'',
+					status:false
 				},
 				dialogFormVisible: false,
 				dialogStatus: '',
@@ -222,24 +199,9 @@
 				},
 				dialogPvVisible: false,
 				pvData: [],
-				rules: {
-					type: [{
-						required: true,
-						message: 'type is required',
-						trigger: 'change'
-					}],
-					timestamp: [{
-						type: 'date',
-						required: true,
-						message: 'timestamp is required',
-						trigger: 'change'
-					}],
-					title: [{
-						required: true,
-						message: 'title is required',
-						trigger: 'blur'
-					}]
-				},
+
+
+
 				downloadLoading: false
 			}
 		},
@@ -255,7 +217,7 @@
 					this.list = response.data.items
 					this.total = response.data.total
 
-					// Just to simulate the time of the request
+
 					setTimeout(() => {
 						this.listLoading = false
 					}, 1.5 * 1000)
@@ -263,16 +225,17 @@
 			},
 			handleFilter() {
 				this.listQuery.page = 1
-				this.getList()
+				var title
+				title = this.listQuery.title
+				this.getList(title)
 			},
 			handleModifyStatus(row, status) {
 				this.$message({
 					message: '操作Success',
 					type: 'success'
 				})
-				console.log("sss")
-				axios.post('/message/isSuccess', {
-						status: 'delete',
+				
+				axios.post('/role/delete', {
 						id: row.id
 					})
 					.then(function(response) {
@@ -306,31 +269,34 @@
 			
 			resetTemp() {
 
+			},
+			handleCreate() {
+				this.resetTemp()
 				this.temp = {
-
-					id: '',
-					remark: '',
+					id: undefined,
+				
+					username: '',
 					createTime: '',
-					title: '',
-					status: 'published',
-					type: '',
-					editor:''
+					level: '',
+					qq: '',
+					email: '',
+					telephone: '',
+					editor: '',
+					password:''
 				}
-			
+				this.temp.status =true
 				var this_ = this
-				axios.get('/message/getthings')
+				axios.get('/role/getthings')
 					.then(function(response) {
-						console.log(response);
+						
 						this_.temp.id = response.data.id
 						this_.temp.createTime = response.data.date
-						this_.temp.editor = response.data.editor
+						this_.temp.Editor = Cookies.get("username")
+						
 					})
 					.catch(function(error) {
 						console.log(error);
 					});
-			},
-			handleCreate() {
-				this.resetTemp()
 				this.dialogStatus = 'create'
 				this.dialogFormVisible = true
 				this.$nextTick(() => {
@@ -342,7 +308,7 @@
 				this.$refs['dataForm'].validate((valid) => {
 					if(valid) {
 
-						createArticle(this.temp).then(() => {
+						createRole(this.temp).then(() => {
 
 							this.list.unshift(this.temp)
 							this.dialogFormVisible = false
@@ -357,8 +323,10 @@
 				})
 			},
 			handleUpdate(row) {
+				var this_ = this
 				this.temp = Object.assign({}, row) // copy obj
-				this.temp.timestamp = new Date(this.temp.timestamp)
+
+				this_.temp.Editor = Cookies.get("username")
 				this.dialogStatus = 'update'
 				this.dialogFormVisible = true
 				this.$nextTick(() => {
@@ -369,8 +337,8 @@
 				this.$refs['dataForm'].validate((valid) => {
 					if(valid) {
 						const tempData = Object.assign({}, this.temp)
-						tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-						updateArticle(tempData).then(() => {
+
+						updateRole(tempData).then(() => {
 							for(const v of this.list) {
 								if(v.id === this.temp.id) {
 									const index = this.list.indexOf(v)
@@ -389,36 +357,14 @@
 					}
 				})
 			},
-			handleDelete(row) {
-				this.$notify({
-					title: 'Success',
-					message: 'Delete Successfully',
-					type: 'success',
-					duration: 2000
-				})
-				const index = this.list.indexOf(row)
-				this.list.splice(index, 1)
-			},
+
 			handleFetchPv(pv) {
 				fetchPv(pv).then(response => {
 					this.pvData = response.data.pvData
 					this.dialogPvVisible = true
 				})
 			},
-			handleDownload() {
-				this.downloadLoading = true
-				import('@/vendor/Export2Excel').then(excel => {
-					const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-					const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-					const data = this.formatJson(filterVal, this.list)
-					excel.export_json_to_excel({
-						header: tHeader,
-						data,
-						filename: 'table-list'
-					})
-					this.downloadLoading = false
-				})
-			},
+
 			formatJson(filterVal, jsonData) {
 				return jsonData.map(v => filterVal.map(j => {
 					if(j === 'timestamp') {
