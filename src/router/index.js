@@ -137,6 +137,7 @@ export const constantRoutes = [
       {
         path: '/menu4',
         name: 'Menu4',
+        component: () => import('@/views/menu/menu4'),
         meta: { title: '招聘管理' },
         children: [
           {

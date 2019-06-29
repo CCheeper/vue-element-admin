@@ -93,16 +93,6 @@
 					<el-input v-model="temp.password"  />
 				</el-form-item>
 
-				<!-- <el-form-item v-if=false>
-					<el-input v-model="temp.id" />
-				</el-form-item>
-				<el-form-item v-if=false>
-					<el-input v-model="temp.createTime" />
-				</el-form-item>
-				<el-form-item v-if=false>
-					<el-input v-model="temp.editor" />
-				</el-form-item> -->
-
 			</el-form>
 			<div slot="footer" class="dialog-footer">
 				<el-button @click="dialogFormVisible = false">
