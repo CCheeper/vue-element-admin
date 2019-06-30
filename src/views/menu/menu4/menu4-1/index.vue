@@ -1,7 +1,7 @@
 <template>
 	<div class="app-container">
 		<div class="filter-container">
-			<el-input v-model="listQuery.title"  style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+			<el-input v-model="listQuery.username"  style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
 
 			<el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
 				Search
@@ -26,7 +26,6 @@
 				</template>
 			</el-table-column>
 
-
 			<el-table-column label="报名时间" width="160px" align="center">
 				<template slot-scope="scope">
 					<span>{{ scope.row.createTime }}</span>
@@ -38,11 +37,13 @@
 					<span class="link-type" @click="handleUpdate(row)">{{ row.gender }}</span>
 				</template>
 			</el-table-column>
+
 			<el-table-column label="QQ" min-width="100px">
 				<template slot-scope="{row}">
 					<span class="link-type" @click="handleUpdate(row)">{{ row.qq }}</span>
 				</template>
 			</el-table-column>
+
 			<el-table-column label="email" min-width="100px" align="center">
 				<template slot-scope="scope">
 					<span>{{ scope.row.email }}</span>
@@ -53,17 +54,18 @@
 					<span>{{ scope.row.telephone }}</span>
 				</template>
 			</el-table-column>
+
       	<el-table-column label="地址" min-width="110px" align="center">
 				<template slot-scope="scope">
 					<span>{{ scope.row.address }}</span>
 				</template>
 			</el-table-column>
+
       	<el-table-column label="学校名称" min-width="110px" align="center">
 				<template slot-scope="scope">
 					<span>{{ scope.row.schoolname }}</span>
 				</template>
 			</el-table-column>
-
 			
 			<el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
 				<template slot-scope="{row}">
@@ -84,9 +86,9 @@
 
 <script>
 	import { fetchList, fetchPv, createHelp} from '@/api/help'
-	import waves from '@/directive/waves' // waves directive
+	import waves from '@/directive/waves'    // waves directive
 	import { parseTime } from '@/utils'
-	import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+	import Pagination from '@/components/Pagination'        // secondary package based on el-pagination
 	import axios from 'axios'
 	import Cookies from 'js-cookie'
 	
@@ -122,12 +124,12 @@
 				listQuery: {
 					page: 1,
 					limit: 20,
-					title: '',
+					username: '',
 					type: undefined,
 					sort: '+id'
 				},
 				sortOptions: [{
-					label: 'ID Ascending',
+					label: 'ID Asctending',
 					key: '+id'
 				}, {
 					label: 'ID Descending',
@@ -145,6 +147,7 @@
 					telephone: '',
 					address: '',
 					schoolname:'',
+					schoolid:'',
 					status:false
 				},
 				dialogFormVisible: false,
