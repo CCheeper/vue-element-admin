@@ -1,11 +1,7 @@
 <template>
 	<div class="app-container">
 		<div class="filter-container">
-			<el-input v-model="listQuery.title"  style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-
-			<el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-				Search
-			</el-button>
+		
 			<el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
 				Add
 			</el-button>
@@ -117,7 +113,7 @@
 </template>
 
 <script>
-	import { fetchList,  createRole, updateRole } from '@/api/role'
+	import { fetchList,  createDemandManager, updateDemandManager } from '@/api/demandmanager'
 	import waves from '@/directive/waves' // waves directive
 	import { parseTime } from '@/utils'
 	import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -219,7 +215,7 @@
 					type: 'success'
 				})
 				
-				axios.post('/role/delete', {
+				axios.post('/demanddanager/delete', {
 						id: row.id
 					})
 					.then(function(response) {
@@ -275,7 +271,7 @@
 				this.$refs['dataForm'].validate((valid) => {
 					if(valid) {
 
-						createRole(this.temp).then(() => {
+						createDemandManager(this.temp).then(() => {
 
 							this.list.unshift(this.temp)
 							this.dialogFormVisible = false
@@ -305,7 +301,7 @@
 					if(valid) {
 						const tempData = Object.assign({}, this.temp)
 
-						updateRole(tempData).then(() => {
+						updateDemandManager(tempData).then(() => {
 							for(const v of this.list) {
 								if(v.id === this.temp.id) {
 									const index = this.list.indexOf(v)
