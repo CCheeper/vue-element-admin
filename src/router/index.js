@@ -5,6 +5,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
+import Axios from 'axios';
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -30,8 +31,27 @@ import Layout from '@/layout'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
+
+
+const role_edit = () => import('@/views/menu/menu1/menu1-2/complex-table')
+const personal_edit = () => import('@/views/menu/menu4/menu4-2')
+const need_edit = () => import('@/views/menu/menu2/menu2-2')
+const helppeople_edit = () => import('@/views/menu/menu4/menu4-1')
+const helpZ_edit = () => import('@/views/menu/menu3/menu3-3/complex-table')
+const workdata_edit = () => import('@/views/menu/menu3/menu3-2')
+const road_edit = () => import('@/views/menu/menu3/menu3-1')
+const school_edit = () => import('@/views/menu/menu2/menu2-1/complex-table')
+const power_edit = () => import('@/views/menu/menu1/menu1-1')
+
+
+
+
+
+
+
 export const constantRoutes = [
   {
+
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
@@ -51,11 +71,9 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: 'Dashboard', icon: 'dashboard', role: ['admin', 'super_editor'] }
     }]
   },
-
-
 
   {
     path: '/menu',
@@ -73,16 +91,19 @@ export const constantRoutes = [
         component: () => import('@/views/menu/menu1'),
         children: [
           {
+
             path: '/menu1-1',
             name: 'Menu1-1',
-            meta: { title: '权限管理' },
-            component: () => import('@/views/menu/menu1/menu1-1')
+            meta: { title: '权限管理', role: ['super_editor'] },
+            component: power_edit
+
+
           },
           {
             path: '/menu1-2',
-            component: () => import('@/views/menu/menu1/menu1-2/complex-table'),
+            component: role_edit,
             name: 'Menu1-2',
-            meta: { title: '角色管理' }
+            meta: { title: '角色管理', role: ['super_editor'] }
           }
 
         ]
@@ -95,13 +116,13 @@ export const constantRoutes = [
         children: [
           {
             path: '/menu2-1',
-            component: () => import('@/views/menu/menu2/menu2-1/complex-table'),
+            component: school_edit,
             name: 'Menu2-1',
             meta: { title: '学校管理' }
           },
           {
             path: '/menu2-2',
-            component: () => import('@/views/menu/menu2/menu2-2'),
+            component: need_edit,
             name: 'Menu2-2',
             meta: { title: '援藏需求' }
           }
@@ -116,19 +137,19 @@ export const constantRoutes = [
         children: [
           {
             path: '/menu3-1',
-            component: () => import('@/views/menu/menu3/menu3-1'),
+            component: road_edit,
             name: 'Menu3-1',
             meta: { title: '路线管理' }
           },
           {
             path: '/menu3-2',
-            component: () => import('@/views/menu/menu3/menu3-2'),
+            component: workdata_edit,
             name: 'Menu3-2',
             meta: { title: '工作动态' }
           },
           {
             path: '/menu3-3',
-            component: () => import('@/views/menu/menu3/menu3-3/complex-table'),
+            component: helpZ_edit,
             name: 'Menu3-3',
             meta: { title: '援藏政策' }
           }
@@ -142,13 +163,13 @@ export const constantRoutes = [
         children: [
           {
             path: '/menu4-1',
-            component: () => import('@/views/menu/menu4/menu4-1'),
+            component: helppeople_edit,
             name: 'Menu4-1',
-            meta: { title: '援藏人员' }
+            meta: { title: '援藏人员', requiresAuth: false }
           },
           {
             path: '/menu4-2',
-            component: () => import('@/views/menu/menu4/menu4-2'),
+            component: personal_edit,
             name: 'Menu4-2',
             meta: { title: '人才引进' }
           }
@@ -158,16 +179,7 @@ export const constantRoutes = [
     ]
   },
 
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
+  
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
@@ -176,13 +188,19 @@ export const constantRoutes = [
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
+
   routes: constantRoutes
 })
 
-const router = createRouter()
+
+
+
+
+const router = createRouter(console.log('路由'))
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
+
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }

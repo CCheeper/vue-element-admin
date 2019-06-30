@@ -13,7 +13,9 @@ export default {
     ...mapGetters([
       'name'
     ])
-  }
+  },
+
+  
 }
 </script>
 

@@ -16,37 +16,37 @@
 				</template>
 			</el-table-column>
 
-			<el-table-column label="管理员名称" width="110px" align="center">
+			<el-table-column label="标题" width="110px" align="center">
 				<template slot-scope="scope">
-					<span>{{ scope.row.username }}</span>
+					<span>{{ scope.row.title }}</span>
 				</template>
 			</el-table-column>
 
 
-			<el-table-column label="创建时间" width="160px" align="center">
+			<el-table-column label="状态" width="160px" align="center">
 				<template slot-scope="scope">
-					<span>{{ scope.row.createTime }}</span>
+					<span>{{ scope.row.ugent }}</span>
 				</template>
 			</el-table-column>
 
-			<el-table-column label="级别（个数）" width="120px">
+			<el-table-column label="学校名称" width="120px">
 				<template slot-scope="{row}">
-					<span class="link-type" @click="handleUpdate(row)">{{ row.level }}</span>
+					<span class="link-type" @click="handleUpdate(row)">{{ row.school_name }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column label="QQ" min-width="100px">
+			<el-table-column label="信息" min-width="100px">
 				<template slot-scope="{row}">
-					<span class="link-type" @click="handleUpdate(row)">{{ row.qq }}</span>
+					<span class="link-type" @click="handleUpdate(row)">{{ row.message }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column label="email" min-width="100px" align="center">
+			<el-table-column label="创建时间" min-width="100px" align="center">
 				<template slot-scope="scope">
-					<span>{{ scope.row.email }}</span>
+					<span>{{ scope.row.create_time }}</span>
 				</template>
 			</el-table-column>
-			<el-table-column label="电话号码" min-width="110px" align="center">
+			<el-table-column label="编辑者" min-width="110px" align="center">
 				<template slot-scope="scope">
-					<span>{{ scope.row.telephone }}</span>
+					<span>{{ scope.row.editor }}</span>
 				</template>
 			</el-table-column>
 
@@ -69,25 +69,22 @@
 		<el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
 			<el-form ref="dataForm"  :model="temp" label-position="left" label-width="170px" style="width: 400px; margin-left:50px;">
 			
-				<el-form-item label="username" v-if = temp.status>
-					<el-input v-model="temp.username" />
+				<el-form-item label="标题">
+					<el-input v-model="temp.title" />
 				</el-form-item>
 			
-			
-			
-			
-				<el-form-item label="QQ">
-					<el-input v-model="temp.qq" />
+				<el-form-item label="状态">
+					<el-select v-model="temp.isgo" class="filter-item" placeholder="Please select">
+						<el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
+					</el-select>
 				</el-form-item>
-				<el-form-item label="email">
-					<el-input v-model="temp.email" />
+				<el-form-item label="学校名字">
+					<el-input v-model="temp.school_name" />
 				</el-form-item>
-				<el-form-item label="telephone">
-					<el-input v-model="temp.telephone"  />
+				<el-form-item label="信息">
+					<el-input v-model="temp.message"   :autosize="{ minRows: 4, maxRows: 6}" type="textarea"/>
 				</el-form-item>
-				<el-form-item label="password">
-					<el-input v-model="temp.password"  />
-				</el-form-item>
+		
 
 			</el-form>
 			<div slot="footer" class="dialog-footer">
@@ -119,7 +116,18 @@
 	import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 	import axios from 'axios'
 	import Cookies from 'js-cookie'
-	
+  
+  
+  const calendarTypeOptions = [{
+			key: '紧急',
+			display_name: '紧急'
+		},
+		{
+			key: '非紧急',
+			display_name: '非紧急'
+		},
+
+	]
 
 	export default {
 		name: 'ComplexTable',
@@ -152,7 +160,7 @@
 				listQuery: {
 					page: 1,
 					limit: 20,
-					title: '',
+			
 					type: undefined,
 					sort: '+id'
 				},
@@ -160,16 +168,15 @@
 				showReviewer: false,
 				temp: {
 					id: undefined,
-	
+          school_name: '',
 					username: '',
-					createTime: '',
-					level: '',
-					qq: '',
+					create_time: '',
+					title: '',
+					ugent: '',
 					email: '',
-					telephone: '',
-					editor: '',
-					password:'',
-					status:false
+          message: '',
+					editor: ''
+				
 				},
 				dialogFormVisible: false,
 				dialogStatus: '',
@@ -235,31 +242,7 @@
 			},
 			handleCreate() {
 				this.resetTemp()
-				this.temp = {
-					id: undefined,
 				
-					username: '',
-					createTime: '',
-					level: '',
-					qq: '',
-					email: '',
-					telephone: '',
-					editor: '',
-					password:''
-				}
-				this.temp.status =true
-				var this_ = this
-				axios.get('/role/getthings')
-					.then(function(response) {
-						
-						this_.temp.id = response.data.id
-						this_.temp.createTime = response.data.date
-						this_.temp.Editor = Cookies.get("username")
-						
-					})
-					.catch(function(error) {
-						console.log(error);
-					});
 				this.dialogStatus = 'create'
 				this.dialogFormVisible = true
 				this.$nextTick(() => {
