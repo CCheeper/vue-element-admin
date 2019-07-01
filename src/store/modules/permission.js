@@ -6,9 +6,13 @@ import { asyncRoutes, constantRoutes } from '@/router'
  * @param route
  */
 function hasPermission(roles, route) {
+  //打印后route.meta.roles不存在 ps.我想砍死那个写文档的
   if (route.meta && route.meta.roles) {
+ 
     return roles.some(role => route.meta.roles.includes(role))
+  
   } else {
+    
     return true
   }
 }
@@ -20,12 +24,14 @@ function hasPermission(roles, route) {
  */
 export function filterAsyncRoutes(routes, roles) {
   const res = []
-
+ 
   routes.forEach(route => {
     const tmp = { ...route }
+    
     if (hasPermission(roles, tmp)) {
       if (tmp.children) {
         tmp.children = filterAsyncRoutes(tmp.children, roles)
+       
       }
       res.push(tmp)
     }
@@ -48,12 +54,17 @@ const mutations = {
 
 const actions = {
   generateRoutes({ commit }, roles) {
+   
     return new Promise(resolve => {
       let accessedRoutes
       if (roles.includes('admin')) {
+       
         accessedRoutes = asyncRoutes || []
+     
       } else {
+       
         accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+        console.log('accessedRoutes.......',accessedRoutes)
       }
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)

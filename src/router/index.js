@@ -101,15 +101,15 @@ export const asyncRoutes = [
     redirect: '/menu/index',
     meta: {
       title: '系统管理',
-      icon: 'nested',
-      role: ['admin', 'super_editor']
+      icon: 'nested'
+     
     },
 
     children: [
       {
         path: '/menu1',
         name: 'Menu1',
-        meta: { title: '系统管理', role: ['admin', 'super_editor'] },
+        meta: { title: '系统管理', roles: [ 'power_edit','role_edit'] },
         component: () => import('@/views/menu/menu1'),
 
         children: [
@@ -117,7 +117,7 @@ export const asyncRoutes = [
 
             path: '/menu1-1',
             name: 'Menu1-1',
-            meta: { title: '权限管理', role: ['admin', 'super_editor'] },
+            meta: { title: '权限管理', roles: ['power_edit'] },
             component: power_edit
 
 
@@ -126,7 +126,7 @@ export const asyncRoutes = [
             path: '/menu1-2',
             component: role_edit,
             name: 'Menu1-2',
-            meta: { title: '角色管理', role: ['super_editor'] }
+            meta: { title: '角色管理', roles: ['role_edit'] }
           }
 
         ]
@@ -135,20 +135,20 @@ export const asyncRoutes = [
         path: '/menu2',
         name: 'Menu2',
         component: () => import('@/views/menu/menu2'),
-        meta: { title: '援藏高校',  role: ['admin', 'super_editor']},
+        meta: { title: '援藏高校',  roles: ['school_edit', 'need_edit']},
         alwaysShow: true,
         children: [
           {
             path: '/menu2-1',
             component: school_edit,
             name: 'Menu2-1',
-            meta: { title: '学校管理',  role: ['admin', 'super_editor'] }
+            meta: { title: '学校管理',  roles: ['school_edit'] }
           },
           {
             path: '/menu2-2',
             component: need_edit,
             name: 'Menu2-2',
-            meta: { title: '援藏需求',  role: ['admin', 'super_editor'] }
+            meta: { title: '援藏需求',  roles: ['need_edit'] }
           }
 
         ]
@@ -156,7 +156,7 @@ export const asyncRoutes = [
       {
         path: '/menu3',
         name: 'Menu3',
-        meta: { title: '援藏工作',  role: ['admin', 'super_editor'] },
+        meta: { title: '援藏工作',  roles: ['road_edit', 'workdata_edit','helpZ_edit'] },
         alwaysShow: true,
         component: () => import('@/views/menu/menu3'),
         children: [
@@ -164,19 +164,19 @@ export const asyncRoutes = [
             path: '/menu3-1',
             component: road_edit,
             name: 'Menu3-1',
-            meta: { title: '路线管理' ,  role: ['admin', 'super_editor']}
+            meta: { title: '路线管理' ,  roles: ['road_edit']}
           },
           {
             path: '/menu3-2',
             component: workdata_edit,
             name: 'Menu3-2',
-            meta: { title: '工作动态' ,  role: ['admin', 'super_editor']}
+            meta: { title: '工作动态' ,  roles: ['workdata_edit']}
           },
           {
             path: '/menu3-3',
             component: helpZ_edit,
             name: 'Menu3-3',
-            meta: { title: '援藏政策',  role: ['admin', 'super_editor'] }
+            meta: { title: '援藏政策',  roles: ['helpZ_edit'] }
           }
         ]
       },
@@ -184,20 +184,20 @@ export const asyncRoutes = [
         path: '/menu4',
         name: 'Menu4',
         component: () => import('@/views/menu/menu4'),
-        meta: { title: '招聘管理',  role: ['admin', 'super_editor'] },
+        meta: { title: '招聘管理',  roles: ['helppeople_edit', 'personal_edit'] },
         alwaysShow: true,
         children: [
           {
             path: '/menu4-1',
             component: helppeople_edit,
             name: 'Menu4-1',
-            meta: { title: '援藏人员' ,  role: ['admin', 'super_editor']}
+            meta: { title: '援藏人员' ,  roles: ['helppeople_edit']}
           },
           {
             path: '/menu4-2',
             component: personal_edit,
             name: 'Menu4-2',
-            meta: { title: '人才引进' ,  role: ['admin', 'super_editor']}
+            meta: { title: '人才引进' ,  roles: ['personal_edit']}
           }
 
         ]

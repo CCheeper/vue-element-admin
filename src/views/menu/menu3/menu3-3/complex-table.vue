@@ -109,6 +109,7 @@
         </el-form-item>
         <el-form-item label="上传文件">
           <el-upload
+           
             class="upload-demo"
             ref="upload"
             action="/upload"
