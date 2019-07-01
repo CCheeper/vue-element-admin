@@ -1,4 +1,4 @@
-<template>
+<template >
   <div class="app-container">
     <div class="filter-container" style="margin-bottom:30px">
       <el-input

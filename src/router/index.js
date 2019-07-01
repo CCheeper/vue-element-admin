@@ -73,9 +73,28 @@ export const constantRoutes = [
       component: () => import('@/views/dashboard/index'),
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
-  },
-{
+  }
 
+
+
+
+  // // 404 page must be placed at the end !!!
+  // { path: '*', redirect: '/404', hidden: true }
+]
+
+const createRouter = () => new Router({
+  // mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
+  
+  routes: constantRoutes
+  
+})
+
+
+//异步挂载的路由
+//动态需要根据权限加载的路由表 
+export const asyncRoutes = [
+  {
     path: '/menu',
     component: Layout,
     alwaysShow: true,
@@ -116,20 +135,20 @@ export const constantRoutes = [
         path: '/menu2',
         name: 'Menu2',
         component: () => import('@/views/menu/menu2'),
-        meta: { title: '援藏高校' },
+        meta: { title: '援藏高校',  role: ['admin', 'super_editor']},
         alwaysShow: true,
         children: [
           {
             path: '/menu2-1',
             component: school_edit,
             name: 'Menu2-1',
-            meta: { title: '学校管理' }
+            meta: { title: '学校管理',  role: ['admin', 'super_editor'] }
           },
           {
             path: '/menu2-2',
             component: need_edit,
             name: 'Menu2-2',
-            meta: { title: '援藏需求' }
+            meta: { title: '援藏需求',  role: ['admin', 'super_editor'] }
           }
 
         ]
@@ -137,7 +156,7 @@ export const constantRoutes = [
       {
         path: '/menu3',
         name: 'Menu3',
-        meta: { title: '援藏工作' },
+        meta: { title: '援藏工作',  role: ['admin', 'super_editor'] },
         alwaysShow: true,
         component: () => import('@/views/menu/menu3'),
         children: [
@@ -145,19 +164,19 @@ export const constantRoutes = [
             path: '/menu3-1',
             component: road_edit,
             name: 'Menu3-1',
-            meta: { title: '路线管理' }
+            meta: { title: '路线管理' ,  role: ['admin', 'super_editor']}
           },
           {
             path: '/menu3-2',
             component: workdata_edit,
             name: 'Menu3-2',
-            meta: { title: '工作动态' }
+            meta: { title: '工作动态' ,  role: ['admin', 'super_editor']}
           },
           {
             path: '/menu3-3',
             component: helpZ_edit,
             name: 'Menu3-3',
-            meta: { title: '援藏政策' }
+            meta: { title: '援藏政策',  role: ['admin', 'super_editor'] }
           }
         ]
       },
@@ -165,20 +184,20 @@ export const constantRoutes = [
         path: '/menu4',
         name: 'Menu4',
         component: () => import('@/views/menu/menu4'),
-        meta: { title: '招聘管理' },
+        meta: { title: '招聘管理',  role: ['admin', 'super_editor'] },
         alwaysShow: true,
         children: [
           {
             path: '/menu4-1',
             component: helppeople_edit,
             name: 'Menu4-1',
-            meta: { title: '援藏人员' }
+            meta: { title: '援藏人员' ,  role: ['admin', 'super_editor']}
           },
           {
             path: '/menu4-2',
             component: personal_edit,
             name: 'Menu4-2',
-            meta: { title: '人才引进' }
+            meta: { title: '人才引进' ,  role: ['admin', 'super_editor']}
           }
 
         ]
@@ -186,26 +205,6 @@ export const constantRoutes = [
     ]
   },
 
-
-
-
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
-]
-
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  
-  routes: constantRoutes
-  
-})
-
-
-//异步挂载的路由
-//动态需要根据权限加载的路由表 
-export const asyncRoutes = [
-  
   { path: '*', redirect: '/404', hidden: true }
 ];
 

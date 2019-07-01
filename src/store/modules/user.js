@@ -1,7 +1,6 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
-import Cookies from 'js-cookie'
 
 const state = {
   token: getToken(),
@@ -38,9 +37,6 @@ const actions = {
         const { data } = response
         commit('SET_TOKEN', data.token)
         setToken(data.token)
-        // Cookies.set("username",state.name,{
-        //   expires:inHalfADay
-        // });
         resolve()
       }).catch(error => {
         reject(error)
@@ -64,7 +60,7 @@ const actions = {
         if (!roles || roles.length <= 0) {
           reject('getInfo: roles must be a non-null array!')
         }
-		console.log(roles)
+
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
@@ -82,9 +78,6 @@ const actions = {
       logout(state.token).then(() => {
         commit('SET_TOKEN', '')
         commit('SET_ROLES', [])
-        
-        Cookies.remove("username")
-  
         removeToken()
         resetRouter()
         resolve()
