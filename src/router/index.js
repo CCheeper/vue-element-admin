@@ -71,30 +71,34 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard', role: ['admin', 'super_editor'] }
+      meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
+{
 
-  {
     path: '/menu',
     component: Layout,
+    alwaysShow: true,
+    redirect: '/menu/index',
     meta: {
       title: '系统管理',
-      icon: 'nested'
+      icon: 'nested',
+      role: ['admin', 'super_editor']
     },
 
     children: [
       {
         path: '/menu1',
         name: 'Menu1',
-        meta: { title: '系统管理' },
+        meta: { title: '系统管理', role: ['admin', 'super_editor'] },
         component: () => import('@/views/menu/menu1'),
+
         children: [
           {
 
             path: '/menu1-1',
             name: 'Menu1-1',
-            meta: { title: '权限管理', role: ['super_editor'] },
+            meta: { title: '权限管理', role: ['admin', 'super_editor'] },
             component: power_edit
 
 
@@ -113,6 +117,7 @@ export const constantRoutes = [
         name: 'Menu2',
         component: () => import('@/views/menu/menu2'),
         meta: { title: '援藏高校' },
+        alwaysShow: true,
         children: [
           {
             path: '/menu2-1',
@@ -133,6 +138,7 @@ export const constantRoutes = [
         path: '/menu3',
         name: 'Menu3',
         meta: { title: '援藏工作' },
+        alwaysShow: true,
         component: () => import('@/views/menu/menu3'),
         children: [
           {
@@ -160,12 +166,13 @@ export const constantRoutes = [
         name: 'Menu4',
         component: () => import('@/views/menu/menu4'),
         meta: { title: '招聘管理' },
+        alwaysShow: true,
         children: [
           {
             path: '/menu4-1',
             component: helppeople_edit,
             name: 'Menu4-1',
-            meta: { title: '援藏人员', requiresAuth: false }
+            meta: { title: '援藏人员' }
           },
           {
             path: '/menu4-2',
@@ -179,7 +186,8 @@ export const constantRoutes = [
     ]
   },
 
-  
+
+
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
@@ -188,10 +196,18 @@ export const constantRoutes = [
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-
+  
   routes: constantRoutes
+  
 })
 
+
+//异步挂载的路由
+//动态需要根据权限加载的路由表 
+export const asyncRoutes = [
+  
+  { path: '*', redirect: '/404', hidden: true }
+];
 
 
 

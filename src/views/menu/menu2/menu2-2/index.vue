@@ -74,7 +74,7 @@
 				</el-form-item>
 			
 				<el-form-item label="状态">
-					<el-select v-model="temp.isgo" class="filter-item" placeholder="Please select">
+					<el-select v-model="temp.ugent" class="filter-item" placeholder="Please select">
 						<el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
 					</el-select>
 				</el-form-item>
@@ -130,6 +130,7 @@
 	]
 
 	export default {
+		
 		name: 'ComplexTable',
 		components: {
 			Pagination
@@ -155,7 +156,7 @@
 				tableKey: 0,
 				list: null,
 				total: 0,
-				
+				calendarTypeOptions,
 				listLoading: true,
 				listQuery: {
 					page: 1,

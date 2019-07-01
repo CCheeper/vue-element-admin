@@ -141,6 +141,7 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
         <el-button
+        v-if="temp.status"
           type="primary"
           @click="dialogStatus==='create'?createData('temp'):updateData()"
         >Confirm</el-button>
@@ -250,7 +251,7 @@ export default {
         createTime: "",
         title: "",
         type: "",
-        status: "published",
+        status: false,
         editor: ""
       },
       dialogFormVisible: false,
@@ -273,6 +274,7 @@ export default {
 
 
     submitUpload() {
+      this.temp.status =true
       this.$refs.upload.submit();
     },
     handleRemove(file, fileList) {
@@ -360,7 +362,7 @@ export default {
         remark: "",
         createTime: "",
         title: "",
-        status: "published",
+        status: false,
         type: "",
         editor: ""
       };

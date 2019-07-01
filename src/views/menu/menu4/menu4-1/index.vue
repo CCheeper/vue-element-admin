@@ -1,14 +1,12 @@
 <template>
 	<div class="app-container">
 		<div class="filter-container">
-			<el-input v-model="listQuery.title"  style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+			<el-input v-model="listQuery.username"  style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
 
 			<el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
 				Search
 			</el-button>
-			<el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-				Add
-			</el-button>
+			
 
 		</div>
 		<br />
@@ -60,7 +58,7 @@
 			</el-table-column>
       	<el-table-column label="学校名称" min-width="110px" align="center">
 				<template slot-scope="scope">
-					<span>{{ scope.row.schoolname }}</span>
+					<span>{{ scope.row.schoolName }}</span>
 				</template>
 			</el-table-column>
 
@@ -122,7 +120,7 @@
 				listQuery: {
 					page: 1,
 					limit: 20,
-					title: '',
+					username: '',
 					type: undefined,
 					sort: '+id'
 				},
@@ -182,7 +180,7 @@
 			handleFilter() {
 				this.listQuery.page = 1
 				var title
-				title = this.listQuery.title
+				title = this.listQuery.username
 				this.getList(title)
 			},
 			handleModifyStatus(row, status) {
