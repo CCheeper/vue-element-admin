@@ -190,7 +190,7 @@
 					limit: 20,
 					importance: 1,
 			
-					title: '学校名称',
+					title: '',
 					type: undefined,
 					sort: '+id'
 				},
@@ -244,7 +244,7 @@
 
 					setTimeout(() => {
 						this.listLoading = false
-					}, 1.5 * 1000)
+					}, 0.2 * 1000)
 				})
 			},
 			handleFilter() {
@@ -342,6 +342,7 @@
 							})
 						})
 					}
+					location.reload();
 				})
 			},
 			handleUpdate(row) {

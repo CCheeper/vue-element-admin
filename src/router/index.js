@@ -56,6 +56,7 @@ export const constantRoutes = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
+ 
 
   {
     path: '/404',
@@ -74,8 +75,6 @@ export const constantRoutes = [
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   }
-
-
 
 
   // // 404 page must be placed at the end !!!
@@ -204,7 +203,7 @@ export const asyncRoutes = [
       }
     ]
   },
-
+ 
   { path: '*', redirect: '/404', hidden: true }
 ];
 

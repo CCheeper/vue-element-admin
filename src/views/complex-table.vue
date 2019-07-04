@@ -265,7 +265,7 @@ export default {
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false;
-        }, 0.2 * 1000);
+        }, 1.5 * 1000);
       });
     },
 
@@ -280,7 +280,7 @@ export default {
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false;
-        }, 0.2 * 1000);
+        }, 1.5 * 1000);
       });
     },
     handleFilter() {

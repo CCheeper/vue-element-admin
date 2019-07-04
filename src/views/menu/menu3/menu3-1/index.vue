@@ -101,11 +101,11 @@
         ref="dataForm"
         :model="temp"
         label-position="left"
-        label-width="70px"
+        label-width="130px"
         style="width: 400px; margin-left:50px;"
       >
-        <el-form-item label="路线">
-          <el-input v-model="temp.road"/>
+        <el-form-item label="路线（通过,分割）">
+          <el-input v-model="temp.route"/>
         </el-form-item>
         <el-form-item label="学校名称">
           <el-input v-model="temp.schoolname"/>
@@ -116,7 +116,7 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
         <el-button
-        v-if="temp.status"
+        
           type="primary"
           @click="dialogStatus==='create'?createData('temp'):updateData()"
         >Confirm</el-button>
@@ -189,7 +189,9 @@ export default {
         schoolname: "",
         createTime: "",
         title: "",
-        editor: ""
+        route:'',
+        editor:Cookies.get("username"),
+        status:false
       },
       dialogFormVisible: false,
       dialogStatus: "",
@@ -222,7 +224,7 @@ export default {
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false;
-        }, 1.5 * 1000);
+        }, 0.2 * 1000);
       });
     },
     handleFilter() {
@@ -256,28 +258,28 @@ export default {
     handleCreate() {
       this.resetTemp();
 
-      // this.temp = {
-      //   id: "",
-      //   remark: "",
-      //   createTime: "",
-      //   title: "",
-      //   status: false,
-      //   type: "",
-      //   editor: ""
-      // };
+      this.temp = {
+        id: "",
+        remark: "",
+        createTime: "",
+        title: "",
+        status: false,
+        type: "",
+        editor: ""
+      };
 
-      // var this_ = this;
-      // axios
-      //   .get("/policy/getthings")
-      //   .then(function(response) {
-      //     this_.temp.id = response.data.id;
-      //     this_.temp.createTime = response.data.date;
-      //     this_.temp.editor = Cookies.get("username");      //前端更新显示，并未从后端获取，但是数据和后台一样
-      //     console.log(Cookies.get("username") + "asdasdasd");
-      //   })
-      //   .catch(function(error) {
-      //     console.log(error);
-      //   });
+      var this_ = this;
+      axios
+        .get("/road/getthings")
+        .then(function(response) {
+          this_.temp.id = response.data.id;
+          this_.temp.createTime = response.data.date;
+          this_.temp.Editor = Cookies.get("username");      //前端更新显示，并未从后端获取，但是数据和后台一样
+       
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
 
       this.dialogStatus = "create";
       this.dialogFormVisible = true;
@@ -286,6 +288,7 @@ export default {
       });
     },
     createData(temp) {
+      this.temp.status =true
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
           createRoad(this.temp).then(() => {
@@ -300,9 +303,12 @@ export default {
             });
           });
         }
+        location.reload();
       });
     },
     handleUpdate(row) {
+      
+      this.temp.status =true
       var this_ = this
       this.temp = Object.assign({}, row); // copy obj
 

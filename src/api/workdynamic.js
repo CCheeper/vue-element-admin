@@ -32,7 +32,7 @@ export function createWorkdynamic(data) {
   })
 }
 
-export function updatePolicy(data) {
+export function updateWorkdynamic(data) {
   return request({
     url: '/workdynamic/update',
     method: 'post',
